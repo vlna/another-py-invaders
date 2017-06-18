@@ -63,7 +63,19 @@ while running:
         bullet[1] -= 1
     if len(bullets) > 0 and bullets[0][1] <= -16:
         bullets.pop(0)
- 
+
+    # collision check
+    destroyedinvaders = []
+    destroyedbullets = []
+    for bullet in bullets:
+        for invader in invaders:
+            if bullet[0] < invader[0] + 16 and bullet[0] + 64 > invader[0] and bullet[1] < invader[1] + 16 and invader[1] + 16 > bullet[1]:
+                destroyedbullets.append(bullet)
+                destroyedinvaders.append(invader)
+                #print('collision')
+    bullets = [item for item in bullets if item not in destroyedbullets]
+    invaders = [item for item in invaders if item not in destroyedinvaders]
+    
     # 9 - Move player
 ##    if keys[0]:
 ##        player[1] -= 5
@@ -107,4 +119,3 @@ while running:
             #shoot.play()
             if len(bullets) < 3: # up to three bullets
                 bullets.append([player[0]+32, player[1]-32])
-
